@@ -1,6 +1,6 @@
 {-# LANGUAGE ExistentialQuantification, Rank2Types #-}
 module Reactive.Banana.Gtk (
-  AttrBinding(..), {- eventM, -} event0, event1, event2, event3,
+  AttrBinding(..), eventM, event0, event1, event2, event3,
   monitorAttr, monitorF, pollAttr, sink,
   intervals, intervalsWithControl, IntervalControl(..)
 ) where
@@ -57,7 +57,7 @@ intervalsWithControl control period = do
         liftIO $ writeIORef banananHandlerRef bananaHandler
         return $ f StopIntervals
 
-{-
+
 eventM :: (Frameworks t, Gtk.GObjectClass self)
     => self
     -> Signal self (Gtk.EventM a Bool)
@@ -67,7 +67,7 @@ eventM self signal m =
     fromAddHandler $ \e -> do
         callbackId <- on self signal $ m >> return False -- e is not used here!
         return $ signalDisconnect callbackId
--}
+
 eventN :: (Frameworks t, Gtk.GObjectClass self) 
     => ((a -> IO ()) -> callback) 
     -> self
